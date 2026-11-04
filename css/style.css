@@ -1,0 +1,2527 @@
+
+:root {
+    --primary: #34483d;
+    --primary-light: #506959;
+    --accent: #86a593;
+    --background: #f3f7f4;
+    --surface: #ffffff;
+    --text: #26372d;
+    --muted: #65756a;
+    --border: #dce6de;
+    --success: #527a60;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--text);
+    background: var(--background);
+}
+
+.topbar {
+    min-height: 82px;
+    background: var(--primary);
+    color: white;
+    padding: 16px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--accent);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+.brand span {
+    font-size: 12px;
+    color: #c6d3e4;
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    color: #e0e9f5;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #f2bd4b;
+}
+
+.container {
+    width: min(1200px, 90%);
+    margin: 0 auto;
+}
+
+.welcome {
+    padding: 38px 0 26px;
+}
+
+.eyebrow {
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+}
+
+.welcome h2 {
+    margin: 8px 0;
+    font-size: clamp(27px, 4vw, 36px);
+}
+
+.welcome > p:last-child,
+.section-heading p,
+.module-card p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.metric-card,
+.module-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.metric-label,
+.metric-note {
+    display: block;
+}
+
+.metric-label {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.metric-card strong {
+    display: block;
+    margin: 13px 0 8px;
+    font-size: 32px;
+}
+
+.metric-note {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.module-section {
+    padding: 38px 0;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.section-heading h3 {
+    margin: 0;
+    font-size: 21px;
+}
+
+.section-heading p {
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+.version {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary-light);
+    background: #e4ecf8;
+    border-radius: 6px;
+    padding: 8px 10px;
+    white-space: nowrap;
+}
+
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.module-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    color: var(--accent);
+    background: #eaf2ff;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.module-card h4 {
+    margin: 18px 0 8px;
+    font-size: 16px;
+}
+
+.module-card p {
+    min-height: 42px;
+    font-size: 13px;
+}
+
+.module-status {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 7px 9px;
+    border-radius: 6px;
+    background: #f0f3f8;
+    color: #58677d;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+footer {
+    padding: 22px 0 30px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media (max-width: 800px) {
+    .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .module-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .metric-card,
+    .module-card {
+        padding: 16px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+    }
+}
+
+
+/* ==============================
+   FORMULÁRIO DE CADASTRO DE PNEUS
+============================== */
+
+#telaCadastro[hidden] {
+    display: none !important;
+}
+
+#telaCadastro {
+    margin-top: 28px;
+}
+
+#formCadastroPneu {
+    margin-top: 24px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #26364a;
+}
+
+.form-group input {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #d5dce5;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #34483d;
+    font: inherit;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #2878d0;
+    box-shadow: 0 0 0 3px rgba(40, 120, 208, 0.12);
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+#btnSalvarPneu,
+#btnVoltarPainel {
+    min-height: 42px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#btnSalvarPneu {
+    background: #527a60;
+    color: #ffffff;
+}
+
+#btnSalvarPneu:hover {
+    background: #12558b;
+}
+
+#btnVoltarPainel {
+    background: #e8edf3;
+    color: #26364a;
+}
+
+#btnVoltarPainel:hover {
+    background: #d9e1eb;
+}
+
+#mensagemCadastro {
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+/* Ajuste para telas menores */
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    #btnSalvarPneu,
+    #btnVoltarPainel {
+        width: 100%;
+    }
+}
+
+
+/* =====================================
+   TABELA DE PNEUS CADASTRADOS
+===================================== */
+
+.tabela-container {
+    width: 100%;
+    margin-top: 22px;
+    overflow-x: auto;
+    border: 1px solid #dce3eb;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+#tabelaPneus {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+#tabelaPneus thead {
+    background: #34483d;
+    color: #ffffff;
+}
+
+#tabelaPneus th,
+#tabelaPneus td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e6ebf1;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+#tabelaPneus th {
+    font-weight: 600;
+}
+
+#tabelaPneus tbody tr:hover {
+    background: #f3f7fb;
+}
+
+#tabelaPneus tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#tabelaPneus td:first-child {
+    font-weight: 600;
+    color: #506959;
+}
+
+#mensagemListaPneus {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #526176;
+}
+
+#btnAbrirListaPneus,
+#btnVerPneus {
+    margin-top: 10px;
+    min-height: 40px;
+    padding: 10px 16px;
+    border: 1px solid #86a593;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #506959;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#btnAbrirListaPneus:hover,
+#btnVerPneus:hover {
+    background: #edf5fc;
+}
+
+
+/* Botão de histórico do pneu */
+
+.btn-historico-pneu {
+    margin: 4px;
+    padding: 8px 12px;
+    border: 1px solid #d5dce5;
+    border-radius: 7px;
+    background: #f3f6fa;
+    color: #26364a;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-historico-pneu:hover {
+    background: #e5edf6;
+}
+
+
+/* =====================================
+   MAPA VISUAL DO EQUIPAMENTO - MAINTIX
+===================================== */
+
+.mapa-equipamento {
+    margin: 24px 0;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #dbe2ea;
+    border-radius: 14px;
+    color: #34483d;
+}
+
+.mapa-cabecalho {
+    margin-bottom: 18px;
+}
+
+.mapa-cabecalho h4 {
+    margin: 0 0 6px;
+    font-size: 18px;
+}
+
+.mapa-cabecalho p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.mapa-legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 28px;
+    font-size: 13px;
+}
+
+.mapa-legenda span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.legenda-ponto {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.legenda-ponto.livre {
+    background: #64748b;
+}
+
+.legenda-ponto.ocupado {
+    background: #16a34a;
+}
+
+.mapa-chassi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 8px;
+    overflow-x: auto;
+}
+
+.mapa-eixo {
+    display: grid;
+    grid-template-columns: minmax(85px, 1fr) 90px minmax(85px, 1fr);
+    align-items: center;
+    justify-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 440px;
+}
+
+.mapa-eixo-dianteiro {
+    margin-bottom: 4px;
+}
+
+.mapa-eixo-central {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    width: 100%;
+    border: 3px solid #94a3b8;
+    border-radius: 8px;
+    background: #e2e8f0;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.grupo-rodagem {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.posicao-pneu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    min-height: 72px;
+    padding: 5px;
+    border: 2px solid #475569;
+    border-radius: 8px;
+    background: #64748b;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.posicao-pneu:hover {
+    border-color: #34483d;
+    filter: brightness(1.12);
+}
+
+.posicao-pneu.ocupada {
+    background: #16a34a;
+    border-color: #15803d;
+}
+
+.posicao-pneu.selecionada {
+    outline: 3px solid #f59e0b;
+    outline-offset: 3px;
+}
+
+.mapa-linha-chassi {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 440px;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.mapa-chassi-linha {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: #94a3b8;
+}
+
+.detalhes-posicao-mapa {
+    margin-top: 18px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 13px;
+}
+
+@media (max-width: 480px) {
+    .mapa-equipamento {
+        padding: 14px;
+    }
+
+    .mapa-eixo {
+        grid-template-columns: minmax(65px, 1fr) 66px minmax(65px, 1fr);
+        gap: 5px;
+    }
+
+    .posicao-pneu {
+        width: 38px;
+        min-height: 65px;
+        font-size: 9px;
+    }
+
+    .mapa-eixo-central {
+        font-size: 9px;
+    }
+}
+
+
+/* ==========================================
+   MAINTIX — PADRÃO VISUAL GLOBAL
+   Etapa 1: identidade e componentes
+========================================== */
+
+:root {
+    --primary: #34483d;
+    --primary-light: #506959;
+    --accent: #86a593;
+    --accent-hover: #708b79;
+
+    --background: #f3f7f4;
+    --surface: #ffffff;
+
+    --text: #26372d;
+    --muted: #65756a;
+    --border: #dce6de;
+
+    --success: #527a60;
+    --warning: #b45309;
+    --danger: #b91c1c;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --shadow-card: 0 2px 8px rgba(43, 65, 50, 0.05);
+    --shadow-hover: 0 8px 22px rgba(43, 65, 50, 0.1);
+
+    --transition-ui: 180ms ease;
+}
+
+/* Base global */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: var(--text);
+    background: var(--background);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    transition:
+        background-color var(--transition-ui),
+        border-color var(--transition-ui),
+        box-shadow var(--transition-ui),
+        transform var(--transition-ui);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(134, 165, 147, 0.35);
+    outline-offset: 2px;
+}
+
+/* Cartões e superfícies */
+
+.metric-card,
+.module-card,
+.mapa-equipamento {
+    border-color: var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+}
+
+.metric-card,
+.module-card {
+    transition:
+        border-color var(--transition-ui),
+        box-shadow var(--transition-ui),
+        transform var(--transition-ui);
+}
+
+.module-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+/* Formulários */
+
+.form-group label {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text);
+    transition:
+        border-color var(--transition-ui),
+        box-shadow var(--transition-ui);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(134, 165, 147, 0.2);
+    outline: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* Botões principais já existentes */
+
+#btnSalvarPneu {
+    background: var(--accent);
+    border-radius: var(--radius-sm);
+}
+
+#btnSalvarPneu:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 4px 10px rgba(80, 105, 89, 0.2);
+}
+
+#btnVoltarPainel {
+    border-radius: var(--radius-sm);
+}
+
+/* Tabelas */
+
+.tabela-container,
+.table-container {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+}
+
+#tabelaPneus {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#tabelaPneus th {
+    background: var(--primary);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+#tabelaPneus td {
+    color: #334155;
+}
+
+#tabelaPneus tbody tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+#tabelaPneus tbody tr:hover {
+    background: #edf4ef;
+}
+
+/* Botões de histórico e consulta */
+
+.btn-historico-pneu,
+#btnAbrirListaPneus,
+#btnVerPneus {
+    border-radius: var(--radius-sm);
+    transition:
+        background-color var(--transition-ui),
+        border-color var(--transition-ui),
+        color var(--transition-ui);
+}
+
+.btn-historico-pneu:hover,
+#btnAbrirListaPneus:hover,
+#btnVerPneus:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* Telas menores */
+
+@media (max-width: 600px) {
+    .container {
+        width: 92%;
+    }
+
+    .welcome {
+        padding-top: 28px;
+    }
+
+    .section-heading {
+        flex-wrap: wrap;
+    }
+
+    .mapa-equipamento {
+        border-radius: var(--radius-md);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+
+/* =========================================
+   MAINTIX - NAVEGAÇÃO LATERAL RECOLHÍVEL
+   Etapa 2.2
+========================================= */
+
+:root {
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 76px;
+}
+
+/* Botão de abrir/recolher */
+.menu-toggle {
+    position: fixed;
+    top: 18px;
+    left: calc(var(--sidebar-width) + 14px);
+    z-index: 1100;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--primary);
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: left 0.25s ease, background 0.2s ease;
+}
+
+/* Menu lateral */
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebar-width);
+    height: 100vh;
+    padding: 24px 14px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: var(--primary);
+    color: #fff;
+    transition: width 0.25s ease, transform 0.25s ease;
+}
+
+.sidebar-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 12px 28px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-brand-name {
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.sidebar-brand-subtitle {
+    color: #cbd5e1;
+    font-size: 10px;
+    letter-spacing: 1.4px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding-top: 24px;
+}
+
+.sidebar-label {
+    margin: 0 10px 12px;
+    color: #aebed2;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: #e2e8f0;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-item span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+    background: var(--primary-light);
+    color: #fff;
+}
+
+.sidebar-item.active {
+    box-shadow: inset 3px 0 0 #b5c8ba;
+}
+
+.sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: auto;
+    padding: 22px 12px 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e2e8f0;
+    font-size: 12px;
+}
+
+.sidebar-footer small {
+    color: #aebed2;
+}
+
+/* Área principal deslocada para o lado do menu */
+body {
+    transition: padding-left 0.25s ease;
+}
+
+body.menu-aberto {
+    padding-left: var(--sidebar-width);
+}
+
+body.menu-recolhido {
+    padding-left: var(--sidebar-collapsed-width);
+}
+
+body.menu-recolhido .sidebar {
+    width: var(--sidebar-collapsed-width);
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+body.menu-recolhido .sidebar-brand {
+    align-items: center;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+body.menu-recolhido .sidebar-brand-name {
+    font-size: 15px;
+    letter-spacing: 0;
+}
+
+        body.menu-recolhido .sidebar-brand-subtitle,
+        body.menu-recolhido .sidebar-label,
+        body.menu-recolhido .sidebar-item:not(.active),
+        body.menu-recolhido .sidebar-footer {
+            /* Os rótulos serão controlados na etapa de interação. */
+        }
+
+body.menu-recolhido .sidebar-item {
+    justify-content: center;
+    gap: 0;
+    padding-right: 4px;
+    padding-left: 4px;
+    font-size: 0;
+}
+
+body.menu-recolhido .sidebar-item span {
+    font-size: 11px;
+}
+
+body.menu-recolhido .menu-toggle {
+    left: calc(var(--sidebar-collapsed-width) + 14px);
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+    body,
+    body.menu-aberto,
+    body.menu-recolhido {
+        padding-left: 0;
+    }
+
+    .sidebar {
+        width: var(--sidebar-width);
+        transform: translateX(-100%);
+    }
+
+    body.menu-aberto .sidebar {
+        transform: translateX(0);
+    }
+
+    body.menu-recolhido .sidebar {
+        width: var(--sidebar-width);
+        transform: translateX(-100%);
+    }
+
+    .menu-toggle,
+    body.menu-recolhido .menu-toggle {
+        top: 12px;
+        left: 12px;
+    }
+
+    body.menu-aberto .menu-toggle {
+        left: calc(var(--sidebar-width) + 12px);
+    }
+
+    main.container {
+        padding-top: 64px;
+    }
+}
+
+/* =====================================================
+   MAINTIX — REFINAMENTO VISUAL INTEGRADO DOS MÓDULOS
+   Camada de apresentação; preserva IDs e lógica existente
+===================================================== */
+:root {
+    --sidebar-width: 258px;
+    --sidebar-collapsed-width: 78px;
+    --primary: #34483d;
+    --primary-light: #506959;
+    --accent: #86a593;
+    --accent-hover: #708b79;
+    --background: #f3f7f4;
+    --surface: #ffffff;
+    --text: #26372d;
+    --muted: #65756a;
+    --border: #dce6de;
+    --success: #527a60;
+    --warning: #b45309;
+    --danger: #b91c1c;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --shadow-sm: 0 3px 12px rgba(43, 65, 50, .07);
+    --shadow-md: 0 12px 30px rgba(43, 65, 50, .11);
+}
+
+html { background: var(--background); scroll-behavior: smooth; }
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.5;
+}
+body.menu-aberto { padding-left: var(--sidebar-width); }
+body.menu-recolhido { padding-left: var(--sidebar-collapsed-width); }
+[hidden] { display: none !important; }
+
+.topbar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    min-height: 76px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 14px 30px 14px 82px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,.94);
+    box-shadow: 0 2px 12px rgba(15,23,42,.025);
+}
+.brand { display:flex; align-items:center; gap:12px; }
+.brand-icon {
+    display:grid; place-items:center; width:44px; height:44px; border-radius:13px;
+    background:var(--primary); color:#fff; font-weight:800; font-size:20px;
+    box-shadow:0 6px 14px rgba(20,36,58,.18);
+}
+.brand h1 { margin:0; color:var(--primary); font-size:18px; line-height:1.2; letter-spacing:1.5px; }
+.brand span { display:block; margin-top:3px; color:var(--muted); font-size:12px; }
+.system-status { display:flex; align-items:center; gap:9px; color:var(--muted); font-size:12px; }
+.status-dot { width:8px; height:8px; border-radius:50%; background:#94a3b8; box-shadow:0 0 0 4px #f1f5f9; }
+
+.sidebar {
+    width:var(--sidebar-width); box-sizing:border-box; padding:22px 14px 16px;
+    background:linear-gradient(180deg,#34483d 0%,#26372d 100%);
+    box-shadow:8px 0 30px rgba(15,23,42,.08);
+}
+.sidebar-brand { padding:12px 12px 24px; }
+.sidebar-brand-name { color:#fff; font-size:24px; letter-spacing:2px; }
+.sidebar-brand-subtitle { color:#aebed2; font-size:10px; }
+.sidebar-label { margin-top:20px; }
+.sidebar-item { min-height:46px; border-radius:10px; font-size:13px; font-weight:550; }
+.sidebar-item span { background:rgba(255,255,255,.09); color:#cbd5e1; }
+.sidebar-item:hover { background:rgba(255,255,255,.09); }
+.sidebar-item.active { background:#506959; box-shadow:inset 3px 0 0 #b5c8ba; color:#fff; }
+.sidebar-footer { margin-top:auto; }
+.menu-toggle {
+    top:17px; left:calc(var(--sidebar-width) + 16px); width:42px; height:42px;
+    border:1px solid var(--border); border-radius:12px; background:#fff;
+    color:var(--primary); font-size:21px; box-shadow:var(--shadow-sm);
+}
+body.menu-recolhido .menu-toggle { left:calc(var(--sidebar-collapsed-width) + 16px); }
+body.menu-recolhido .sidebar-brand-subtitle,
+body.menu-recolhido .sidebar-label,
+body.menu-recolhido .sidebar-footer { display:none; }
+body.menu-recolhido .sidebar-brand { padding-top:14px; padding-bottom:24px; }
+body.menu-recolhido .sidebar-brand-name { font-size:13px; letter-spacing:0; }
+body.menu-recolhido .sidebar-item { position:relative; font-size:0; }
+body.menu-recolhido .sidebar-item span { flex-basis:32px; height:32px; font-size:11px; }
+
+.container { width:min(1500px,100%); box-sizing:border-box; margin:0 auto; padding:30px 32px 42px; }
+.welcome {
+    position:relative; overflow:hidden; margin-bottom:24px; padding:28px 30px;
+    border:1px solid #dce6f3; border-radius:var(--radius-lg);
+    background:linear-gradient(115deg,#fff 0%,#f7faf7 68%,#eaf1ec 100%);
+    box-shadow:var(--shadow-sm);
+}
+.welcome::after { content:""; position:absolute; right:-55px; top:-100px; width:250px; height:250px; border:35px solid rgba(134,165,147,.14); border-radius:50%; pointer-events:none; }
+.eyebrow { margin:0 0 8px; color:var(--accent); font-size:11px; font-weight:800; letter-spacing:1.6px; }
+.welcome h2 { margin:0 0 8px; color:var(--primary); font-size:clamp(25px,3vw,34px); line-height:1.2; letter-spacing:-.7px; }
+.welcome p:last-child { max-width:650px; margin:0; color:var(--muted); font-size:14px; }
+.metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-bottom:30px; }
+.metric-card { position:relative; min-height:130px; box-sizing:border-box; padding:21px 22px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--shadow-sm); }
+.metric-card::before { content:""; position:absolute; inset:0 auto 0 0; width:4px; border-radius:14px 0 0 14px; background:var(--accent); }
+.metric-label { display:block; color:var(--muted); font-size:12px; font-weight:650; }
+.metric-card strong { display:block; margin:9px 0 5px; color:var(--primary); font-size:30px; line-height:1; letter-spacing:-.8px; }
+.metric-note { color:#94a3b8; font-size:11px; }
+.module-section { margin-bottom:22px; padding:25px; border:1px solid var(--border); border-radius:var(--radius-lg); background:var(--surface); box-shadow:var(--shadow-sm); }
+.section-heading,.section-header { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:22px; }
+.section-heading h3,.section-header h2,.section-header h3 { margin:0; color:var(--primary); font-size:21px; line-height:1.3; letter-spacing:-.35px; }
+.section-heading p,.section-header p { margin:6px 0 0; color:var(--muted); font-size:13px; }
+.version { flex-shrink:0; padding:6px 10px; border:1px solid #d5e2d8; border-radius:999px; background:#edf4ef; color:#506959; font-size:10px; font-weight:800; letter-spacing:.6px; }
+.module-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:17px; }
+.module-card { display:flex; flex-direction:column; align-items:flex-start; gap:10px; min-width:0; padding:22px; border:1px solid var(--border); border-radius:15px; background:#fff; transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
+.module-card:hover { transform:translateY(-2px); border-color:#bfcee2; box-shadow:var(--shadow-md); }
+.module-icon { display:grid; place-items:center; width:39px; height:39px; border-radius:11px; background:#edf4ef; color:#506959; font-size:12px; font-weight:850; }
+.module-card h4 { margin:2px 0 0; color:var(--primary); font-size:16px; }
+.module-card p { flex:1; margin:0 0 7px; color:var(--muted); font-size:13px; }
+
+form { min-width:0; }
+.form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.form-group { display:flex; flex-direction:column; gap:7px; min-width:0; }
+.form-group label,form label { color:#334155; font-size:12px; font-weight:700; }
+input,select,textarea { width:100%; min-width:0; box-sizing:border-box; padding:11px 13px; border:1px solid #cbd5e1; border-radius:10px; background:#fff; color:var(--text); font:inherit; font-size:13px; transition:border-color .15s ease,box-shadow .15s ease; }
+input::placeholder,textarea::placeholder { color:#94a3b8; }
+input:focus,select:focus,textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(134,165,147,.2); }
+.form-actions { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:22px; }
+button { font-family:inherit; }
+button:not(.sidebar-item):not(.menu-toggle) { min-height:40px; padding:10px 15px; border:1px solid transparent; border-radius:10px; background:var(--accent); color:#fff; font-size:12px; font-weight:700; cursor:pointer; transition:background .16s ease,transform .16s ease,border-color .16s ease; }
+button:not(.sidebar-item):not(.menu-toggle):hover { background:var(--accent-hover); }
+button:not(.sidebar-item):not(.menu-toggle):active { transform:translateY(1px); }
+button:focus-visible { outline:3px solid rgba(59,130,246,.35); outline-offset:2px; }
+.form-actions button[type="button"],button.secondary,button[id*="Voltar"],button[id*="Cancelar"] { border-color:#cbd5e1; background:#fff; color:#334155; }
+.form-actions button[type="button"]:hover,button.secondary:hover,button[id*="Voltar"]:hover,button[id*="Cancelar"]:hover { background:#f1f5f9; }
+button:disabled { opacity:.55; cursor:not-allowed; }
+
+.tabela-container { width:100%; margin-top:18px; overflow:auto; border:1px solid var(--border); border-radius:12px; background:#fff; }
+table { width:100%; border-collapse:separate; border-spacing:0; font-size:12px; }
+thead th { position:sticky; top:0; z-index:1; padding:13px 14px; border-bottom:1px solid #dbe3ee; background:#f3f6fb; color:#475569; text-align:left; font-size:10px; font-weight:800; letter-spacing:.45px; text-transform:uppercase; white-space:nowrap; }
+tbody td { padding:13px 14px; border-bottom:1px solid #edf1f6; color:#334155; vertical-align:middle; }
+tbody tr:last-child td { border-bottom:0; }
+tbody tr:hover td { background:#f8fbff; }
+tbody td button { margin:2px 4px 2px 0; }
+#mensagemCadastro,#mensagemEquipamento,[id^="mensagem"] { color:var(--muted); font-size:12px; }
+#mapaPosicoes,.mapa-chassi { padding:18px; border:1px solid var(--border); border-radius:14px; background:#f8fafc; }
+.painel-instalacao-pneu { margin-top:18px; padding:20px; border:1px solid var(--border); border-radius:14px; background:#f8fafc; }
+.module-section h4 { color:var(--primary); }
+footer { padding:24px 0 8px; color:#94a3b8; font-size:11px; text-align:center; }
+
+@media (min-width:1200px) {
+    .module-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .form-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+@media (max-width:900px) {
+    .container { padding:24px 20px 34px; }
+    .metrics { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .module-section { padding:20px; }
+}
+@media (max-width:768px) {
+    body,body.menu-aberto,body.menu-recolhido { padding-left:0; }
+    .topbar { min-height:68px; padding:12px 16px 12px 66px; }
+    .brand-icon { width:38px; height:38px; }
+    .system-status { max-width:135px; font-size:10px; }
+    .sidebar { width:var(--sidebar-width); transform:translateX(-100%); }
+    body.menu-aberto .sidebar { transform:translateX(0); }
+    body.menu-recolhido .sidebar { width:var(--sidebar-width); transform:translateX(-100%); }
+    .menu-toggle,body.menu-recolhido .menu-toggle { top:13px; left:12px; }
+    body.menu-aberto .menu-toggle { left:calc(var(--sidebar-width) + 12px); }
+    .container { padding:20px 14px 28px; }
+    .welcome { padding:23px 20px; }
+    .metrics { gap:11px; }
+    .metric-card { min-height:116px; padding:17px; }
+    .metric-card strong { font-size:26px; }
+    .module-section { padding:17px; border-radius:14px; }
+    .module-grid,.form-grid { grid-template-columns:minmax(0,1fr); }
+    .section-heading,.section-header { align-items:flex-start; }
+    .section-heading h3,.section-header h2,.section-header h3 { font-size:18px; }
+    .form-actions { align-items:stretch; }
+    .form-actions button { flex:1 1 180px; }
+    .tabela-container { margin-top:14px; }
+}
+@media (max-width:420px) {
+    .brand h1 { font-size:15px; }
+    .brand span { font-size:10px; }
+    .system-status { max-width:105px; }
+    .metrics { grid-template-columns:1fr 1fr; }
+    .metric-card { padding:13px; }
+    .metric-label { font-size:11px; }
+    .metric-note { font-size:10px; }
+    .version { font-size:9px; padding:5px 7px; }
+}
+@media (prefers-reduced-motion:reduce) {
+    *,*::before,*::after { scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+}
+
+/* =========================================
+   MAINTIX — AJUSTE GLOBAL DE ALINHAMENTO
+   Campos, seletores, filtros e botões
+   ========================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Evita que controles ultrapassem a largura disponível */
+input,
+select,
+textarea,
+button {
+    max-width: 100%;
+    font: inherit;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+select,
+textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    margin: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--text, #17253b);
+    line-height: 1.4;
+    vertical-align: middle;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: auto;
+    min-height: auto;
+    margin: 0 8px 0 0;
+    vertical-align: middle;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid rgba(134, 165, 147, .2);
+    border-color: var(--accent, #86a593);
+}
+
+/* Rótulos com alinhamento uniforme */
+.form-group,
+.form-grid > *,
+form > .form-group {
+    min-width: 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 7px;
+    margin: 0;
+}
+
+.form-group label,
+label {
+    display: block;
+    margin: 0;
+    color: var(--text, #17253b);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 18px 20px;
+    width: 100%;
+}
+
+.form-grid > .form-group {
+    width: 100%;
+}
+
+/* Formulários dentro de telas e cartões */
+form {
+    width: 100%;
+    min-width: 0;
+}
+
+/* Ações alinhadas, com alturas consistentes */
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    margin-top: 22px;
+}
+
+.form-actions button,
+.section-heading button,
+.section-header button,
+.module-card button,
+button:not(.sidebar-item):not(.menu-toggle):not(.posicao-pneu) {
+    min-height: 42px;
+    margin: 0;
+    line-height: 1.25;
+}
+
+.form-actions button {
+    flex: 0 1 auto;
+    max-width: 100%;
+    white-space: normal;
+}
+
+/* Cabeçalhos com botões e filtros */
+.section-heading,
+.section-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.section-heading > *,
+.section-header > * {
+    min-width: 0;
+}
+
+/* Alinhamento dos filtros de movimentação e relatórios */
+#filtroEquipamentoMovimentacao,
+#filtroTipoMovimentacao,
+#relatorioDataInicial,
+#relatorioDataFinal,
+#relatorioTipoMovimentacao {
+    width: 100%;
+    min-width: 0;
+}
+
+/* Grades de filtros, quando os campos aparecem diretamente em uma seção */
+.filter-grid,
+.filtros-grid,
+.report-filters,
+.filtros-relatorio {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    gap: 16px;
+}
+
+/* Tabelas: ações não deformam as linhas */
+.tabela-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+}
+
+table {
+    width: 100%;
+    min-width: 640px;
+    table-layout: auto;
+}
+
+td,
+th {
+    overflow-wrap: anywhere;
+}
+
+td button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px 4px 2px 0;
+    vertical-align: middle;
+}
+
+/* Mapa de posições: botões uniformes sem esticar o layout */
+#mapaPosicoes,
+.mapa-chassi {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.posicao-pneu {
+    min-width: 54px;
+    min-height: 42px;
+    margin: 4px;
+}
+
+/* Mensagens e conteúdos longos não empurram os controles */
+[id^="mensagem"] {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 1200px) {
+    .form-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .filter-grid,
+    .filtros-grid,
+    .report-filters,
+    .filtros-relatorio {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .form-grid,
+    .filter-grid,
+    .filtros-grid,
+    .report-filters,
+    .filtros-relatorio {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .form-actions {
+        align-items: stretch;
+    }
+
+    .form-actions button {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .section-heading,
+    .section-header {
+        align-items: stretch;
+    }
+
+    .section-heading button,
+    .section-header button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================
+   DASHBOARD OPERACIONAL MAINTIX
+========================================= */
+.dashboard-section { padding: 26px; }
+.dashboard-heading { align-items: flex-end; margin-bottom: 24px; }
+.dashboard-heading .eyebrow { margin-bottom: 7px; }
+.dashboard-heading .section-heading p { max-width: 700px; }
+.dashboard-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.dashboard-card { min-width: 0; padding: 22px; border: 1px solid var(--border); border-radius: 16px; background: linear-gradient(150deg, #fff 0%, #f7faf7 100%); box-shadow: 0 5px 16px rgba(43,65,50,.06); }
+.dashboard-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
+.dashboard-kicker { display: block; margin-bottom: 6px; color: #64748b; font-size: 10px; font-weight: 800; letter-spacing: 1.15px; }
+.dashboard-card h4 { margin: 0; color: var(--primary); font-size: 17px; line-height: 1.3; }
+.dashboard-symbol { display: grid; flex: 0 0 38px; width: 38px; height: 38px; place-items: center; border-radius: 11px; background: #edf4ef; color: #506959; font-size: 21px; font-weight: 700; }
+.status-chart { display: grid; gap: 20px; }
+.status-row-label { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; color: #475569; font-size: 12px; }
+.status-row-label strong { margin-left: auto; color: var(--primary); font-size: 13px; }
+.status-dot { display: inline-block; flex: 0 0 8px; width: 8px; height: 8px; border-radius: 50%; }
+.status-stock { background: #708b79; } .status-installed { background: #86a593; } .status-maintenance { background: #f59e0b; }
+.status-track { height: 8px; overflow: hidden; border-radius: 999px; background: #edf1f6; }
+.status-fill { display: block; width: 0; height: 100%; border-radius: inherit; transition: width .25s ease; }
+.status-stock-fill { background: #708b79; } .status-installed-fill { background: #86a593; } .status-maintenance-fill { background: #f59e0b; }
+.dashboard-footnote { margin: 20px 0 0; padding-top: 13px; border-top: 1px solid #edf1f6; color: #8290a3; font-size: 11px; line-height: 1.5; }
+.dashboard-activity-list { display: grid; gap: 0; min-height: 150px; }
+.dashboard-activity-item { display: grid; grid-template-columns: 36px minmax(0,1fr) auto; align-items: center; gap: 11px; padding: 12px 0; border-bottom: 1px solid #edf1f6; }
+.dashboard-activity-item:last-child { border-bottom: 0; }
+.activity-icon { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 10px; background: #f1f5f9; color: #334155; font-size: 13px; font-weight: 800; }
+.activity-main { min-width: 0; } .activity-main strong { display: block; overflow: hidden; color: #24364d; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.activity-main span, .activity-date { color: #8491a3; font-size: 10px; } .activity-date { white-space: nowrap; }
+.dashboard-empty { margin: 0; padding: 22px 0; color: #8290a3; font-size: 12px; }
+.recap-summary-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.recap-summary-item { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 15px; border: 1px solid #dce6de; border-radius: 12px; background: #f7faf7; }
+.recap-summary-item span { color: #64748b; font-size: 11px; } .recap-summary-item strong { color: var(--primary); font-size: 25px; line-height: 1.1; overflow-wrap: anywhere; }
+.recap-cost-item { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; } .recap-cost-item strong { color: #0f766e; font-size: 20px; }
+.overview-list { display: grid; gap: 0; } .overview-list > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 0; border-bottom: 1px solid #edf1f6; } .overview-list > div:first-child { padding-top: 0; } .overview-list > div:last-child { border-bottom: 0; } .overview-list span { color: #64748b; font-size: 12px; } .overview-list strong { color: var(--primary); font-size: 16px; white-space: nowrap; }
+@media (max-width: 900px) { .dashboard-grid { grid-template-columns: minmax(0,1fr); } }
+@media (max-width: 600px) { .dashboard-section { padding: 17px; } .dashboard-heading { align-items: flex-start; flex-direction: column; } .dashboard-card { padding: 17px; } .dashboard-activity-item { grid-template-columns: 34px minmax(0,1fr); } .activity-date { grid-column: 2; } .recap-summary-item strong { font-size: 22px; } }
+
+
+/* =====================================
+   MAPAS DINÂMICOS DE POSIÇÕES POR EQUIPAMENTO
+===================================== */
+.mapa-chassi {
+    width: 100%;
+    max-width: 760px;
+    margin-inline: auto;
+    gap: 14px;
+}
+.mapa-layout-titulo {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 800;
+    text-align: center;
+}
+.mapa-eixo-dinamico {
+    max-width: 600px;
+    grid-template-columns: minmax(0, 1fr) minmax(62px, 90px) minmax(0, 1fr);
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #f8fafc;
+}
+.mapa-eixo-dinamico .grupo-rodagem {
+    align-items: center;
+    gap: clamp(3px, 1vw, 8px);
+    min-width: 0;
+}
+.mapa-eixo-dinamico .posicao-pneu {
+    width: clamp(30px, 5vw, 52px);
+    min-height: 62px;
+    flex: 0 1 52px;
+    writing-mode: horizontal-tb;
+    transform: none;
+    overflow-wrap: anywhere;
+    font-size: clamp(8px, 1vw, 10px);
+}
+.mapa-placeholder, .mapa-nota-tecnica {
+    width: 100%;
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+}
+.mapa-nota-tecnica {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #edf4ef;
+}
+@media (max-width: 480px) {
+    .mapa-eixo-dinamico { padding: 6px; gap: 4px; }
+    .mapa-eixo-dinamico .posicao-pneu { min-height: 54px; padding: 3px; }
+    .mapa-eixo-dinamico .mapa-eixo-central { min-height: 42px; }
+}
+
+/* VERSÃO 6 — distribuição de equipamentos por setor e ações de cadastro */
+.dashboard-setor-card { margin: 0 0 18px; min-width: 0; }
+.setor-dashboard-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px 22px; max-height: 360px; overflow-y: auto; padding: 4px 4px 8px 0; }
+.setor-dashboard-item { min-width: 0; }
+.setor-dashboard-label { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 7px; font-size: .9rem; }
+.setor-dashboard-label span { overflow-wrap: anywhere; }
+.setor-dashboard-label strong { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.setor-dashboard-track { height: 8px; overflow: hidden; border-radius: 999px; background: var(--border-color, #e5eaf0); }
+.setor-dashboard-fill { display: block; height: 100%; max-width: 100%; border-radius: inherit; background: var(--accent-color, #2878c8); transition: width .25s ease; }
+.acoes-equipamento {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 292px;
+}
+
+.acoes-equipamento button {
+    flex: 1 1 0;
+    min-width: 138px;
+    min-height: 46px;
+    margin: 0;
+    white-space: nowrap;
+}
+
+#tabelaEquipamentos td:last-child { min-width: 308px; }
+@media (max-width: 640px) {
+  .setor-dashboard-list { grid-template-columns: minmax(0, 1fr); max-height: 300px; }
+  .setor-dashboard-label { font-size: .84rem; }
+  #tabelaEquipamentos td:last-child { min-width: 308px; }
+}
+
+/* Mapa técnico do chassi e identificação visual de cada pneu */
+.mapa-equipamento {
+    overflow: hidden;
+    padding: clamp(18px, 3vw, 30px);
+    border-color: #d7e1ed;
+    background:
+        radial-gradient(ellipse at 50% 35%, rgba(134, 165, 147, .12), transparent 58%),
+        linear-gradient(145deg, #fff 0%, #f8fafd 100%);
+}
+
+.mapa-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.mapa-cabecalho h4 {
+    color: var(--primary);
+    font-size: 18px;
+    letter-spacing: -.3px;
+}
+
+.mapa-cabecalho p {
+    margin-top: 5px;
+    color: var(--muted);
+}
+
+.mapa-legenda {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    margin-bottom: 16px;
+    color: #475569;
+    font-size: 12px;
+}
+
+.mapa-legenda-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 32px;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: #fff;
+    white-space: nowrap;
+}
+
+.mapa-legenda-item strong {
+    display: inline-grid;
+    min-width: 22px;
+    height: 22px;
+    place-items: center;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: #edf4ef;
+    color: var(--primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.mapa-legenda-estado {
+    background: #f7faf7;
+}
+
+.mapa-legenda-instrucao {
+    flex-basis: 100%;
+}
+
+.legenda-ponto {
+    width: 10px;
+    height: 10px;
+    border: 2px solid #64748b;
+    border-radius: 50%;
+    background: #e2e8f0;
+}
+
+.legenda-ponto.ocupado {
+    border-color: #708b79;
+    background: #86a593;
+}
+
+.mapa-legenda-instrucao {
+    margin-left: auto;
+    color: #718096;
+    font-size: 11px;
+}
+
+#mapaPosicoes.mapa-chassi {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: clamp(12px, 2.5vw, 24px);
+    overflow-x: auto;
+    border: 1px solid #dfe7f0;
+    border-radius: 16px;
+    background:
+        linear-gradient(rgba(255,255,255,.58), rgba(255,255,255,.58)),
+        repeating-linear-gradient(0deg, transparent 0 27px, rgba(148,163,184,.08) 27px 28px),
+        repeating-linear-gradient(90deg, transparent 0 27px, rgba(148,163,184,.08) 27px 28px),
+        #f2f6fa;
+}
+
+.mapa-layout-titulo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 660px;
+    padding: 11px 15px;
+    border-color: #dbe5f0;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 3px 10px rgba(20,36,58,.04);
+    text-align: left;
+}
+
+.mapa-layout-nome {
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.mapa-layout-quantidade {
+    flex-shrink: 0;
+    padding: 5px 9px;
+    border: 1px solid #d5e2d8;
+    border-radius: 999px;
+    background: #edf4ef;
+    color: #506959;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.mapa-chassi-corpo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(18px, 3vw, 28px);
+    width: 100%;
+    max-width: 660px;
+    min-width: 0;
+    margin-inline: auto;
+    padding: 8px 0;
+    isolation: isolate;
+}
+
+.mapa-chassi-corpo::before,
+.mapa-chassi-corpo::after {
+    position: absolute;
+    top: 78px;
+    bottom: 76px;
+    z-index: -1;
+    width: 14px;
+    border: 1px solid #4d627b;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #354a63, #60758e 48%, #354a63);
+    box-shadow: 0 4px 8px rgba(15, 23, 42, .16);
+    content: "";
+}
+
+.mapa-chassi-corpo::before {
+    left: calc(50% - 41px);
+}
+
+.mapa-chassi-corpo::after {
+    right: calc(50% - 41px);
+}
+
+.mapa-extremidade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    color: #718096;
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 1.15px;
+    text-align: center;
+}
+
+.mapa-cabine {
+    position: relative;
+    display: block;
+    width: 108px;
+    height: 58px;
+    border: 2px solid #344a63;
+    border-radius: 18px 18px 8px 8px;
+    background: linear-gradient(180deg, #536a84 0%, #293e57 100%);
+    box-shadow: 0 7px 12px rgba(15, 23, 42, .18), inset 0 0 0 4px rgba(255,255,255,.08);
+    clip-path: polygon(18% 0, 82% 0, 100% 23%, 100% 100%, 0 100%, 0 23%);
+}
+
+.mapa-cabine::after {
+    position: absolute;
+    inset: 9px 18px 8px;
+    border: 1px solid rgba(219, 234, 254, .7);
+    border-radius: 12px 12px 5px 5px;
+    background: linear-gradient(180deg, rgba(191,219,254,.78), rgba(96,125,155,.32));
+    content: "";
+}
+
+.mapa-eixo-dinamico {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    grid-template-columns: minmax(0, 1fr) 92px minmax(0, 1fr);
+    gap: 8px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.mapa-eixo-dinamico::before {
+    position: absolute;
+    top: 50%;
+    right: 7%;
+    left: 7%;
+    z-index: -1;
+    height: 11px;
+    border: 1px solid #71849a;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #d5dee8, #71849a 48%, #53677f);
+    box-shadow: 0 3px 5px rgba(15, 23, 42, .12);
+    content: "";
+    transform: translateY(-50%);
+}
+
+.mapa-eixo-dinamico .grupo-rodagem {
+    gap: clamp(8px, 1.4vw, 16px);
+}
+
+.mapa-eixo-dinamico .lado-direito {
+    flex-direction: row-reverse;
+}
+
+.mapa-eixo-central {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 38px;
+    border: 1px solid #344a63;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #435a74, #20354d);
+    box-shadow: 0 4px 9px rgba(15, 23, 42, .2), inset 0 1px rgba(255,255,255,.22);
+    color: #fff;
+    font-size: 9px;
+    letter-spacing: .8px;
+}
+
+.mapa-eixo-central-area {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+
+.mapa-eixo-central-area .posicao-pneu {
+    align-self: center;
+}
+
+.mapa-eixo-central::before,
+.mapa-eixo-central::after {
+    position: absolute;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border: 1px solid #cbd5e1;
+    border-radius: 50%;
+    content: "";
+    transform: translateY(-50%);
+}
+
+.mapa-eixo-central::before { left: 6px; }
+.mapa-eixo-central::after { right: 6px; }
+
+#mapaPosicoes .mapa-eixo-dinamico .posicao-pneu {
+    position: relative;
+    display: flex;
+    flex: 0 1 54px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: clamp(48px, 7vw, 58px);
+    min-width: 46px;
+    min-height: 82px;
+    margin: 0;
+    padding: 9px 3px 7px;
+    overflow: hidden;
+    border: 2px solid #344154;
+    border-radius: 13px;
+    background: repeating-linear-gradient(0deg, #202b38 0 3px, #364456 3px 5px);
+    box-shadow: inset 0 0 0 3px #202b38, inset 0 0 0 5px #64748b, 0 5px 9px rgba(15, 23, 42, .18);
+    color: #17253b;
+    transition: border-color var(--transition-ui), box-shadow var(--transition-ui), transform var(--transition-ui);
+}
+
+#mapaPosicoes .mapa-eixo-dinamico .posicao-pneu:hover {
+    border-color: #86a593;
+    filter: none;
+    box-shadow: inset 0 0 0 3px #202b38, inset 0 0 0 5px #b5c8ba, 0 7px 12px rgba(80, 105, 89, .24);
+    transform: translateY(-2px);
+}
+
+.posicao-status-visual {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 7px;
+    height: 7px;
+    border: 1px solid #475569;
+    border-radius: 50%;
+    background: #cbd5e1;
+    box-shadow: 0 0 0 2px rgba(15, 23, 42, .34);
+}
+
+.posicao-codigo,
+.posicao-identificacao {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    padding: 2px 3px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: rgba(248, 250, 252, .94);
+    color: #24364d;
+    font-size: 8px;
+    font-weight: 850;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.posicao-identificacao {
+    background: rgba(226, 232, 240, .92);
+    color: #526176;
+    font-size: 7px;
+    letter-spacing: .25px;
+}
+
+#mapaPosicoes .mapa-eixo-dinamico .posicao-pneu.ocupada {
+    border-color: #708b79;
+    box-shadow: inset 0 0 0 3px #202b38, inset 0 0 0 5px #86a593, 0 5px 10px rgba(43, 65, 50, .22);
+}
+
+#mapaPosicoes .mapa-eixo-dinamico .posicao-pneu.ocupada .posicao-status-visual {
+    border-color: #bbf7d0;
+    background: #22c55e;
+    box-shadow: 0 0 0 2px rgba(15, 23, 42, .45), 0 0 10px rgba(34, 197, 94, .72);
+}
+
+#mapaPosicoes .mapa-eixo-dinamico .posicao-pneu.selecionada {
+    z-index: 2;
+    outline: 3px solid #f59e0b;
+    outline-offset: 3px;
+    transform: translateY(-2px);
+}
+
+.mapa-traseira {
+    width: min(250px, 70%);
+    padding-top: 8px;
+    border-top: 3px solid #53677f;
+}
+
+.mapa-nota-tecnica {
+    max-width: 660px;
+    padding: 10px 12px;
+    border: 1px solid #d5e2d8;
+    border-radius: 9px;
+    background: #edf4ef;
+    color: #526176;
+    font-size: 11px;
+}
+
+.detalhes-posicao-mapa {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border: 1px solid #dfe7f0;
+    border-radius: 11px;
+    background: #f8fafc;
+    color: #334155;
+    line-height: 1.6;
+}
+
+#tabelaPosicoesEquipamento {
+    min-width: 980px;
+}
+
+@media (max-width: 600px) {
+    .mapa-equipamento { padding: 16px 12px; }
+    .mapa-cabecalho { flex-direction: column; gap: 5px; }
+    .mapa-legenda-instrucao { flex-basis: 100%; margin-left: 0; }
+    #mapaPosicoes.mapa-chassi { padding: 12px 8px; }
+    #mapaPosicoes .mapa-chassi-corpo { gap: 18px; }
+    #mapaPosicoes .mapa-eixo-dinamico {
+        grid-template-columns: minmax(0, 1fr) 62px minmax(0, 1fr);
+        gap: 4px;
+    }
+    #mapaPosicoes .mapa-eixo-dinamico .grupo-rodagem { gap: 4px; }
+    #mapaPosicoes .mapa-eixo-dinamico .posicao-pneu {
+        flex-basis: 42px;
+        width: 42px;
+        min-width: 38px;
+        min-height: 74px;
+        padding: 7px 2px;
+    }
+}
+
+/* Cadastro de pneus: campos e ações padronizados */
+#formCadastroPneu .campo-ajuda,
+#formEditarPneu .campo-ajuda {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+#formCadastroPneu .form-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 12px;
+}
+
+#formCadastroPneu .form-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 46px;
+    margin: 0;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.3;
+    text-align: center;
+}
+
+#formCadastroPneu #btnSalvarPneu {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+}
+
+#formCadastroPneu #btnSalvarPneu:hover {
+    background: var(--accent-hover);
+}
+
+#formCadastroPneu #btnVerPneus {
+    background: #fff;
+    color: var(--primary);
+}
+
+#formCadastroPneu #btnVerPneus:hover {
+    border-color: var(--accent);
+    background: #edf4ef;
+}
+
+#formCadastroPneu #btnVoltarPainel {
+    background: #f1f5f9;
+    color: #334155;
+}
+
+#formCadastroPneu #btnVoltarPainel:hover {
+    background: #e2e8f0;
+}
+
+#tabelaPneus {
+    min-width: 1100px;
+}
+
+#tabelaPneusDescarte {
+    min-width: 1400px;
+}
+
+#telaDescarte .descarte-metrics {
+    margin: 20px 0;
+}
+
+@media (max-width: 600px) {
+    #formCadastroPneu .form-actions {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* Padronização final de campos, filtros e grupos de botões */
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+select {
+    height: 46px;
+    min-height: 46px;
+    padding: 10px 12px;
+}
+
+textarea {
+    min-height: 100px;
+    padding: 11px 12px;
+}
+
+.form-actions {
+    align-items: stretch;
+    gap: 12px;
+}
+
+.form-actions button {
+    display: inline-flex;
+    flex: 1 1 220px;
+    align-items: center;
+    justify-content: center;
+    min-width: 160px;
+    min-height: 46px;
+    max-width: 260px;
+    padding: 10px 16px;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.module-section button:not(.sidebar-item):not(.menu-toggle):not(.posicao-pneu) {
+    min-height: 46px;
+    padding: 10px 16px;
+    line-height: 1.35;
+}
+
+.section-heading button,
+.section-header button,
+.acoes-filtros button,
+.acoes-relatorio button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 10px 16px;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.filtros-movimentacoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+    align-items: end;
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.campo-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.campo-filtro label {
+    margin: 0;
+    line-height: 1.35;
+}
+
+.acoes-filtros {
+    display: flex;
+    align-items: end;
+    min-width: 0;
+}
+
+.acoes-filtros button {
+    width: 100%;
+}
+
+.acoes-relatorio {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+td button {
+    min-height: 46px;
+    margin: 3px 6px 3px 0;
+    padding: 10px 12px;
+}
+
+td button + button {
+    margin-left: 4px;
+}
+
+@media (max-width: 600px) {
+    .form-actions button {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+    }
+
+    .section-heading button,
+    .section-header button {
+        width: 100%;
+    }
+
+    .acoes-filtros button {
+        width: 100%;
+    }
+
+    .acoes-relatorio > button {
+        flex: 1 1 100%;
+    }
+}
+
+/* Identidade verde MAINTIX: #86A593 e variantes */
+.module-section button:not(.sidebar-item):not(.menu-toggle):not(.posicao-pneu) {
+    border-color: var(--primary-light);
+    background-color: var(--primary-light);
+    color: #fff;
+}
+
+.module-section button:not(.sidebar-item):not(.menu-toggle):not(.posicao-pneu):hover {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.module-section .form-actions button[type="button"],
+.module-section button.secondary,
+.module-section button[id*="Voltar"],
+.module-section button[id*="Cancelar"],
+.module-section button[id*="Limpar"],
+.module-section button[id*="Atualizar"],
+.module-section button[id*="AbrirLista"] {
+    border-color: #d5e2d8;
+    background-color: #edf4ef;
+    color: var(--primary);
+}
+
+.module-section .form-actions button[type="button"]:hover,
+.module-section button.secondary:hover,
+.module-section button[id*="Voltar"]:hover,
+.module-section button[id*="Cancelar"]:hover,
+.module-section button[id*="Limpar"]:hover,
+.module-section button[id*="Atualizar"]:hover,
+.module-section button[id*="AbrirLista"]:hover {
+    border-color: var(--accent);
+    background-color: #dce9df;
+    color: var(--primary);
+}
+
+.module-section button:disabled {
+    background-color: #dce6de;
+    border-color: #dce6de;
+    color: #65756a;
+}
+
+#formCadastroPneu #btnSalvarPneu {
+    border-color: var(--primary-light);
+    background-color: var(--primary-light);
+    color: #fff;
+}
+
+#formCadastroPneu #btnSalvarPneu:hover {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.tabela-container,
+.table-container {
+    border-color: #dce6de;
+}
+
+.tabela-container thead th,
+.table-container thead th {
+    border-color: #d5e2d8;
+    background: #edf4ef;
+    color: #47594c;
+}
+
+.tabela-container tbody tr:hover td,
+.table-container tbody tr:hover td {
+    background: #f3f7f4;
+}
+
+.auth-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    overflow-y: auto;
+    background:
+        radial-gradient(ellipse at 85% 15%, rgba(134, 165, 147, .2), transparent 40%),
+        linear-gradient(145deg, #f3f7f4 0%, #e8f0ea 100%);
+}
+
+.auth-screen[hidden] {
+    display: none;
+}
+
+.auth-card {
+    width: min(100%, 440px);
+    padding: clamp(24px, 5vw, 38px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: 0 20px 60px rgba(43, 65, 50, .14);
+}
+
+.auth-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.auth-brand-icon {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border-radius: 13px;
+    background: var(--primary-light);
+    color: #fff;
+    font-size: 21px;
+    font-weight: 850;
+}
+
+.auth-brand strong,
+.auth-brand span {
+    display: block;
+}
+
+.auth-brand strong {
+    color: var(--primary);
+    font-size: 18px;
+    letter-spacing: 1.4px;
+}
+
+.auth-brand div > span {
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.auth-card h1 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 24px;
+}
+
+.auth-card > p:not(.auth-message):not(.auth-notice) {
+    margin: 8px 0 22px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.auth-form {
+    display: grid;
+    gap: 17px;
+}
+
+.auth-form[hidden] {
+    display: none;
+}
+
+.auth-form button {
+    width: 100%;
+    min-height: 48px;
+    margin-top: 3px;
+    border: 1px solid var(--primary-light);
+    border-radius: 10px;
+    background: var(--primary-light);
+    color: #fff;
+    font-weight: 750;
+}
+
+.auth-form button:hover {
+    background: var(--primary);
+}
+
+.auth-message {
+    min-height: 20px;
+    margin: 14px 0 0;
+    color: var(--primary-light);
+    font-size: 12px;
+}
+
+.auth-notice {
+    margin: 12px 0 0;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.session-user {
+    max-width: 180px;
+    overflow: hidden;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.session-message {
+    max-width: 220px;
+    color: #dce8df;
+    font-size: 11px;
+}
+
+.session-message:empty {
+    display: none;
+}
+
+.system-status .session-action {
+    min-height: 34px;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.system-status .session-action:hover {
+    border-color: var(--accent);
+    background: #edf4ef;
+}
+
+@media (max-width: 768px) {
+    .system-status .session-user {
+        display: none;
+    }
+
+    .session-message {
+        display: none;
+    }
+
+    .system-status .session-action {
+        min-height: 32px;
+        padding: 6px 8px;
+        font-size: 10px;
+    }
+}
