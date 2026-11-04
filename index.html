@@ -1,0 +1,1338 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#86A593">
+
+    <title>MAINTIX | Gestão de Pneus</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="js/supabase-config.js" defer></script>
+    <script src="js/supabase-api.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/auth.js" defer></script>
+</head>
+<body>
+    <section id="authScreen" class="auth-screen" aria-labelledby="authTitle">
+        <div class="auth-card">
+            <div class="auth-brand">
+                <span class="auth-brand-icon">M</span>
+                <div>
+                    <strong>MAINTIX</strong>
+                    <span>Gestão de Pneus</span>
+                </div>
+            </div>
+
+            <h1 id="authTitle">Acesso ao sistema</h1>
+            <p id="authDescription">Entre com sua matrícula e senha local.</p>
+
+            <form id="formLoginLocal" class="auth-form">
+                <div class="form-group">
+                    <label for="loginMatricula">Matrícula</label>
+                    <input id="loginMatricula" name="matricula" autocomplete="username" required>
+                </div>
+                <div class="form-group" id="loginEmailGroup" hidden>
+                    <label for="loginEmail">E-mail</label>
+                    <input id="loginEmail" name="email" type="email" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="loginSenha">Senha local</label>
+                    <input id="loginSenha" name="senha" type="password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" id="btnEntrarLocal">Entrar</button>
+            </form>
+
+            <form id="formCadastroUsuarioLocal" class="auth-form" hidden>
+                <div class="form-group">
+                    <label for="novoUsuarioNome">Nome completo</label>
+                    <input id="novoUsuarioNome" name="nome" autocomplete="name" minlength="2" maxlength="120" required>
+                </div>
+                <div class="form-group" id="novoUsuarioEmailGroup" hidden>
+                    <label for="novoUsuarioEmail">E-mail</label>
+                    <input id="novoUsuarioEmail" name="email" type="email" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="novoUsuarioMatricula">Matrícula</label>
+                    <input id="novoUsuarioMatricula" name="matricula" autocomplete="username" maxlength="60" required>
+                </div>
+                <div class="form-group">
+                    <label for="novoUsuarioSenha">Senha local (mínimo 8 caracteres)</label>
+                    <input id="novoUsuarioSenha" name="senha" type="password" autocomplete="new-password" minlength="8" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmarUsuarioSenha">Confirmar senha</label>
+                    <input id="confirmarUsuarioSenha" name="confirmarSenha" type="password" autocomplete="new-password" minlength="8" required>
+                </div>
+                <button type="submit" id="btnSalvarUsuarioLocal">Cadastrar usuário</button>
+            </form>
+
+            <p id="mensagemAuthLocal" class="auth-message" role="status" aria-live="polite"></p>
+            <p id="avisoAutenticacao" class="auth-notice">
+                Acesso local básico: os dados ficam neste navegador. Não substitui autenticação em servidor e não impede que alguém com acesso ao computador altere ou contorne o sistema.
+            </p>
+        </div>
+    </section>
+
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-icon">M</div>
+            <div>
+                <h1>MAINTIX</h1>
+                <span>Gestão de Pneus</span>
+            </div>
+        </div>
+
+        <div class="system-status">
+            <span id="mensagemImportacaoDados" class="session-message" role="status" aria-live="polite"></span>
+            <span id="usuarioSessaoNome" class="session-user" hidden></span>
+            <button type="button" id="btnImportarDadosLocais" class="session-action" hidden>Importar dados locais</button>
+            <button type="button" id="btnAdicionarUsuarioLocal" class="session-action" hidden>Adicionar usuário</button>
+            <button type="button" id="btnEncerrarSessaoLocal" class="session-action" hidden>Sair</button>
+            <span class="status-dot"></span>
+            <span id="connectionStatus">Verificando conexão...</span>
+        </div>
+    </header>
+
+    
+<!-- Botão para abrir e recolher o menu lateral -->
+<button
+    type="button"
+    id="btnAlternarMenu"
+    class="menu-toggle"
+    aria-label="Abrir ou recolher menu"
+    aria-expanded="false"
+    aria-controls="menuLateral"
+>
+    ☰
+</button>
+
+<!-- Navegação lateral MAINTIX -->
+<aside id="menuLateral" class="sidebar" aria-label="Menu principal">
+    <div class="sidebar-brand">
+        <span class="sidebar-brand-name">MAINTIX</span>
+        <span class="sidebar-brand-subtitle">GESTÃO DE PNEUS</span>
+    </div>
+
+    <nav class="sidebar-nav">
+        <p class="sidebar-label">MENU PRINCIPAL</p>
+
+        <button type="button" class="sidebar-item" data-tela="painel">
+            <span>01</span> Painel principal
+        </button>
+
+        <button type="button" class="sidebar-item" data-tela="cadastro">
+            <span>02</span> Cadastro de pneus
+        </button>
+
+        <button type="button" class="sidebar-item" data-tela="listaPneus">
+            <span>03</span> Pneus cadastrados
+        </button>
+
+        <button type="button" class="sidebar-item" data-tela="equipamentos">
+            <span>04</span> Equipamentos
+        </button>
+
+        <button type="button" class="sidebar-item" data-tela="movimentacoes">
+            <span>05</span> Movimentações
+        </button>
+
+        <button type="button" class="sidebar-item" data-tela="relatorios">
+            <span>06</span> Relatórios
+        </button>
+
+        <button type="button" class="sidebar-item" data-tela="recapagens">
+            <span>07</span> Recapagens
+        </button>
+
+        <button type="button" class="sidebar-item" data-tela="descarte">
+            <span>08</span> Descarte
+        </button>
+        <button type="button" class="sidebar-item" data-tela="arquivados" id="btnMenuArquivados" hidden>
+            <span>09</span> Arquivados
+        </button>
+    </nav>
+
+    <div class="sidebar-footer">
+        <span>MAINTIX</span>
+        <small>Controle operacional</small>
+    </div>
+</aside>
+
+
+    <main class="container">
+        <section class="welcome">
+            <p class="eyebrow">GESTÃO DE MANUTENÇÃO</p>
+            <h2>Controle de pneus</h2>
+            <p>
+                Gestão centralizada de pneus, equipamentos,
+                estoque e movimentações.
+            </p>
+        </section>
+
+        <section class="metrics" aria-label="Indicadores">
+            <article class="metric-card">
+                <span class="metric-label">Total de pneus</span>
+                <strong id="totalPneus">0</strong>
+                <span class="metric-note">Pneus cadastrados</span>
+            </article>
+
+            <article class="metric-card">
+                <span class="metric-label">Em estoque</span>
+                <strong id="pneusEstoque">0</strong>
+                <span class="metric-note">Disponíveis para uso</span>
+            </article>
+
+            <article class="metric-card">
+                <span class="metric-label">Instalados</span>
+                <strong id="pneusInstalados">0</strong>
+                <span class="metric-note">Em equipamentos</span>
+            </article>
+
+            <article class="metric-card">
+                <span class="metric-label">Manutenção</span>
+                <strong id="pneusManutencao">0</strong>
+                <span class="metric-note">Em manutenção</span>
+            </article>
+        </section>
+
+        <section class="dashboard-section module-section" aria-label="Dashboard do MAINTIX">
+            <div class="section-heading dashboard-heading">
+                <div>
+                    <p class="eyebrow">VISÃO OPERACIONAL</p>
+                    <h3>Dashboard de gestão</h3>
+                    <p>Acompanhe a situação da frota de pneus, movimentações e recapagens em um só lugar.</p>
+                </div>
+                <span class="version">PAINEL PRINCIPAL</span>
+            </div>
+
+            <article class="dashboard-card dashboard-setor-card">
+                <div class="dashboard-card-heading">
+                    <div><span class="dashboard-kicker">FROTA POR ÁREA</span><h4>Equipamentos por setor</h4></div>
+                    <span class="dashboard-symbol">▤</span>
+                </div>
+                <p class="dashboard-footnote">Contagem dinâmica por setor. A lista se adapta à quantidade de setores cadastrados.</p>
+                <div id="dashEquipamentosPorSetor" class="setor-dashboard-list" aria-live="polite">
+                    <p class="dashboard-empty">Carregando setores...</p>
+                </div>
+            </article>
+
+            <div class="dashboard-grid">
+                <article class="dashboard-card dashboard-status-card">
+                    <div class="dashboard-card-heading">
+                        <div>
+                            <span class="dashboard-kicker">ESTOQUE E OPERAÇÃO</span>
+                            <h4>Distribuição dos pneus</h4>
+                        </div>
+                        <span class="dashboard-symbol">◉</span>
+                    </div>
+                    <div class="status-chart" aria-label="Distribuição por situação">
+                        <div class="status-row">
+                            <div class="status-row-label"><span class="status-dot status-stock"></span>Em estoque <strong id="dashEstoqueValor">0</strong></div>
+                            <div class="status-track"><span id="dashEstoqueBar" class="status-fill status-stock-fill"></span></div>
+                        </div>
+                        <div class="status-row">
+                            <div class="status-row-label"><span class="status-dot status-installed"></span>Instalados <strong id="dashInstaladosValor">0</strong></div>
+                            <div class="status-track"><span id="dashInstaladosBar" class="status-fill status-installed-fill"></span></div>
+                        </div>
+                        <div class="status-row">
+                            <div class="status-row-label"><span class="status-dot status-maintenance"></span>Em manutenção <strong id="dashManutencaoValor">0</strong></div>
+                            <div class="status-track"><span id="dashManutencaoBar" class="status-fill status-maintenance-fill"></span></div>
+                        </div>
+                    </div>
+                    <p class="dashboard-footnote" id="dashResumoPneus">Aguardando dados dos pneus.</p>
+                </article>
+
+                <article class="dashboard-card dashboard-activity-card">
+                    <div class="dashboard-card-heading">
+                        <div>
+                            <span class="dashboard-kicker">ACOMPANHAMENTO</span>
+                            <h4>Atividade recente</h4>
+                        </div>
+                        <span class="dashboard-symbol">↻</span>
+                    </div>
+                    <div id="dashMovimentacoesRecentes" class="dashboard-activity-list">
+                        <p class="dashboard-empty">Carregando movimentações...</p>
+                    </div>
+                    <p class="dashboard-footnote">Últimos registros de movimentação disponíveis no sistema.</p>
+                </article>
+
+                <article class="dashboard-card dashboard-recap-card">
+                    <div class="dashboard-card-heading">
+                        <div>
+                            <span class="dashboard-kicker">RECAPAGENS</span>
+                            <h4>Controle de recapagens</h4>
+                        </div>
+                        <span class="dashboard-symbol">↗</span>
+                    </div>
+                    <div class="recap-summary-grid">
+                        <div class="recap-summary-item">
+                            <span>Total de registros</span>
+                            <strong id="dashTotalRecapagens">0</strong>
+                        </div>
+                        <div class="recap-summary-item">
+                            <span>Em andamento</span>
+                            <strong id="dashRecapagensPendentes">0</strong>
+                        </div>
+                        <div class="recap-summary-item recap-cost-item">
+                            <span>Custo registrado</span>
+                            <strong id="dashCustoRecapagens">R$ 0,00</strong>
+                        </div>
+                    </div>
+                    <p class="dashboard-footnote" id="dashResumoRecapagens">Indicadores baseados nos registros de recapagem.</p>
+                </article>
+
+                <article class="dashboard-card dashboard-overview-card">
+                    <div class="dashboard-card-heading">
+                        <div>
+                            <span class="dashboard-kicker">RESUMO DO SISTEMA</span>
+                            <h4>Indicadores principais</h4>
+                        </div>
+                        <span class="dashboard-symbol">▦</span>
+                    </div>
+                    <div class="overview-list">
+                        <div><span>Base de pneus cadastrados</span><strong id="dashBasePneus">0</strong></div>
+                        <div><span>Percentual instalado</span><strong id="dashPercentualInstalado">0%</strong></div>
+                        <div><span>Disponibilidade em estoque</span><strong id="dashPercentualEstoque">0%</strong></div>
+                    </div>
+                    <p class="dashboard-footnote">Os indicadores são calculados com os registros locais do MAINTIX.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="telaCadastro" class="module-section">
+            <div class="section-heading">
+                <div>
+                    <h3>Cadastro de Pneus</h3>
+                    <p>Registre a identificação e as características do pneu.</p>
+                </div>
+                <span class="version">CADASTRO</span>
+            </div>
+
+            <form id="formCadastroPneu">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="numeroFogo">Número de fogo</label>
+                        <input
+                            type="text"
+                            id="numeroFogo"
+                            placeholder="Opcional"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="dot">DOT</label>
+                        <input
+                            type="text"
+                            id="dot"
+                            placeholder="Opcional"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="marcaPneu">Marca</label>
+                        <input
+                            type="text"
+                            id="marcaPneu"
+                            required
+                            placeholder="Ex.: Michelin"
+                        >
+                    </div> 
+                    <div class="form-group">
+                        <label for="modeloPneu">Modelo</label>
+                        <input
+                            type="text"
+                            id="modeloPneu"
+                            required
+                            placeholder="Modelo do pneu"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="medidaPneu">Medida</label>
+                        <input
+                            type="text"
+                            id="medidaPneu"
+                            required
+                            placeholder="Ex.: 12.00 R24"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="estadoPneu">Estado do pneu</label>
+                        <select id="estadoPneu" required>
+                            <option value="">Selecione o estado</option>
+                            <option value="NOVO">Novo</option>
+                            <option value="RECAPADO">Recapado</option>
+                            <option value="MEIA_VIDA">Meia vida</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="statusPneu">Status do pneu</label>
+                        <select id="statusPneu" required>
+                            <option value="">Selecione o status</option>
+                            <option value="APLICADO" disabled>Aplicado (definido ao instalar)</option>
+                            <option value="CONSERTO_OFICINA">Conserto oficina</option>
+                            <option value="DESCARTE">Descarte</option>
+                            <option value="PARA_RECAPE">Para recape</option>
+                            <option value="EM_RECAPE">Em recape</option>
+                            <option value="RESERVA_PRONTA_UTILIZACAO">Reserva pronta utilização</option>
+                        </select>
+                        <small class="campo-ajuda">O status “Aplicado” é atribuído automaticamente quando o pneu é instalado.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataCompra">Data de entrada</label>
+                        <input
+                            type="date"
+                            id="dataCompra"
+                        >
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="btnSalvarPneu">
+                        Salvar pneu
+                    </button>
+                    <button type="button" id="btnVerPneus">
+                        Consultar pneus cadastrados
+                    </button>
+
+                    <button type="button" id="btnVoltarPainel">
+                        Voltar ao painel
+                    </button>
+                </div>
+            </form>
+            <p id="mensagemCadastro" role="status"></p>
+        </section>
+        <section id="telaListaPneus" class="module-section" hidden>
+            <div class="section-heading">
+                <div>
+                    <h3>Pneus cadastrados</h3>
+                    <p>Consulte os pneus registrados no sistema.</p>
+                </div>
+
+                <span class="version">INVENTÁRIO</span>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="btnAtualizarLista">
+                    Atualizar lista
+                </button>
+
+                <button type="button" id="btnVoltarCadastro">
+                    Voltar ao cadastro
+                </button>
+
+                <button type="button" id="btnVoltarPainelLista">
+                    Voltar ao painel
+                </button>
+            </div>
+
+            <div class="tabela-container">
+                <table id="tabelaPneus">
+                    <thead>
+                        <tr>
+                            <th>ID interno</th>
+                            <th>Número de fogo</th>
+                            <th>DOT</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Medida</th>
+                            <th>Estado</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="corpoTabelaPneus">
+                        <tr>
+                            <td colspan="9">
+                                Carregando registros...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="mensagemListaPneus" role="status"></p>
+        </section>
+
+        <section id="telaDescarte" class="module-section" hidden>
+            <div class="section-heading">
+                <div>
+                    <h3>Inventário de pneus descartados</h3>
+                    <p>Lista atualizada automaticamente com os pneus cujo status está como Descarte.</p>
+                </div>
+                <span class="version">DESCARTE</span>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="btnAtualizarDescarte">Atualizar lista</button>
+                <button type="button" id="btnVoltarPainelDescarte">Voltar ao painel</button>
+            </div>
+
+            <div class="metrics descarte-metrics" aria-label="Indicadores de pneus descartados">
+                <article class="metric-card">
+                    <span class="metric-label">Total descartado</span>
+                    <strong id="totalPneusDescarte">0</strong>
+                    <span class="metric-note" id="percentualPneusDescarte">0% do inventário</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-label">Estado novo</span>
+                    <strong id="descarteEstadoNovo">0</strong>
+                    <span class="metric-note">Pneus descartados</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-label">Estado recapado</span>
+                    <strong id="descarteEstadoRecapado">0</strong>
+                    <span class="metric-note">Pneus descartados</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-label">Estado meia vida</span>
+                    <strong id="descarteEstadoMeiaVida">0</strong>
+                    <span class="metric-note">Pneus descartados</span>
+                </article>
+            </div>
+
+            <div class="tabela-container">
+                <table id="tabelaPneusDescarte">
+                    <thead>
+                        <tr>
+                            <th>ID interno</th>
+                            <th>Número de fogo</th>
+                            <th>DOT</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Medida</th>
+                            <th>Estado</th>
+                            <th>Status</th>
+                            <th>Data de entrada</th>
+                            <th>Data do descarte</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaPneusDescarte">
+                        <tr><td colspan="11">Carregando registros...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="mensagemListaDescarte" role="status" aria-live="polite"></p>
+        </section>
+
+        <section id="telaEditarPneu" class="module-section" hidden>
+            <div class="section-heading">
+                <div>
+                    <h3>Editar pneu</h3>
+                    <p>Atualize estado, status e identificações sem alterar o ID interno.</p>
+                </div>
+
+                <span class="version">EDIÇÃO</span>
+            </div>
+
+            <form id="formEditarPneu">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="editarIdPneu">ID interno permanente</label>
+                        <input type="text" id="editarIdPneu" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editarNumeroFogo">Número de fogo</label>
+                        <input
+                            type="text"
+                            id="editarNumeroFogo"
+                            placeholder="Opcional"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editarDot">DOT</label>
+                        <input
+                            type="text"
+                            id="editarDot"
+                            placeholder="Opcional"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editarMarca">Marca</label>
+                        <input type="text" id="editarMarca" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editarModelo">Modelo</label>
+                        <input type="text" id="editarModelo" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editarMedida">Medida</label>
+                        <input type="text" id="editarMedida" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editarEstadoPneu">Estado do pneu</label>
+                        <select id="editarEstadoPneu">
+                            <option value="">Selecione o estado</option>
+                            <option value="NOVO">Novo</option>
+                            <option value="RECAPADO">Recapado</option>
+                            <option value="MEIA_VIDA">Meia vida</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editarStatusPneu">Status do pneu</label>
+                        <select id="editarStatusPneu" required>
+                            <option value="">Selecione o status</option>
+                            <option value="APLICADO" disabled>Aplicado (definido pela instalação)</option>
+                            <option value="CONSERTO_OFICINA">Conserto oficina</option>
+                            <option value="DESCARTE">Descarte</option>
+                            <option value="PARA_RECAPE">Para recape</option>
+                            <option value="EM_RECAPE">Em recape</option>
+                            <option value="RESERVA_PRONTA_UTILIZACAO">Reserva pronta utilização</option>
+                        </select>
+                        <small class="campo-ajuda">O status “Aplicado” acompanha a instalação do pneu e não pode ser alterado por aqui.</small>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="btnSalvarEdicaoPneu">
+                        Salvar alterações
+                    </button>
+
+                    <button type="button" id="btnCancelarEdicaoPneu">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+
+            <p id="mensagemEdicaoPneu" role="status"></p>
+        </section>
+
+        <section id="telaHistoricoPneu" class="module-section" hidden>
+            <div class="section-heading">
+                <div>
+                    <h3>Histórico de vida do pneu</h3>
+                    <p>Consulte identificações, estado, status e movimentações do pneu.</p>
+                </div>
+
+                <span class="version">HISTÓRICO</span>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="historicoIdPneu">ID interno permanente</label>
+                    <input type="text" id="historicoIdPneu" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="historicoFogoAtual">Número de fogo atual</label>
+                    <input type="text" id="historicoFogoAtual" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="historicoDotAtual">DOT atual</label>
+                    <input type="text" id="historicoDotAtual" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="historicoEstadoAtual">Estado atual</label>
+                    <input type="text" id="historicoEstadoAtual" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="historicoStatusAtual">Status atual</label>
+                    <input type="text" id="historicoStatusAtual" readonly>
+                </div>
+            </div>
+
+            <h4>Identificações, estado e status</h4>
+
+            <div class="tabela-container">
+                <table id="tabelaHistoricoPneu">
+                    <thead>
+                        <tr>
+                            <th>Data e hora</th>
+                            <th>Informação</th>
+                            <th>Alteração</th>
+                            <th>Evento</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="corpoTabelaHistoricoPneu">
+                        <tr>
+                            <td colspan="4">Selecione um pneu para consultar.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            
+            <div class="section-header">
+                <div>
+                    <h3>Histórico de movimentações do pneu</h3>
+                    <p>Instalações e retiradas registradas para este ID interno.</p>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Movimentação</th>
+                            <th>Equipamento</th>
+                            <th>Posição</th>
+                            <th>Motivo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaMovimentacoesPneu">
+                        <tr>
+                            <td colspan="5">Nenhuma movimentação carregada.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="mensagemMovimentacoesPneu"></p>
+
+
+            <p id="mensagemHistoricoPneu" role="status"></p>
+
+            <div class="form-actions">
+                <button type="button" id="btnVoltarListaHistorico">
+                    Voltar à listagem
+                </button>
+            </div>
+        </section>
+
+
+        <section id="telaHistoricoMovimentacoes" class="module-section" hidden>
+            <div class="section-header">
+                <div>
+                    <h2>Histórico de movimentações</h2>
+                    <p>Consulte as instalações e retiradas registradas no sistema.</p>
+                </div>
+
+                <button type="button" id="btnVoltarHistoricoMovimentacoes">
+                    Voltar
+                </button>
+            </div>
+
+
+            <div class="filtros-movimentacoes">
+                <div class="campo-filtro">
+                    <label for="filtroIdPneuMovimentacao">ID do pneu</label>
+                    <input
+                        type="text"
+                        id="filtroIdPneuMovimentacao"
+                        placeholder="Digite o ID do pneu"
+                    >
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="filtroEquipamentoMovimentacao">Equipamento</label>
+                    <select id="filtroEquipamentoMovimentacao">
+                        <option value="">Todos os equipamentos</option>
+                    </select>
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="filtroTipoMovimentacao">Tipo de movimentação</label>
+                    <select id="filtroTipoMovimentacao">
+                        <option value="">Todos os tipos</option>
+                        <option value="INSTALACAO">Instalação</option>
+                        <option value="RETIRADA">Retirada</option>
+                    </select>
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="filtroNumeroFogoMovimentacao">Número de fogo</label>
+                    <input
+                        type="text"
+                        id="filtroNumeroFogoMovimentacao"
+                        placeholder="Digite o número de fogo"
+                    >
+                </div>
+
+                <div class="acoes-filtros">
+                    <button type="button" id="btnLimparFiltrosMovimentacao">
+                        Limpar filtros
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tipo</th>
+                            <th>ID do pneu</th>
+                            <th>Número de fogo</th>
+                            <th>Equipamento</th>
+                            <th>Posição</th>
+                            <th>Motivo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="corpoTabelaHistoricoMovimentacoes">
+                        <tr>
+                            <td colspan="8">Nenhuma movimentação carregada.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="mensagemHistoricoMovimentacoes"></p>
+        </section>
+
+        
+        <section id="telaRelatorios" class="module-section" hidden>
+            <div class="section-header">
+                <div>
+                    <h2>Relatórios de movimentações</h2>
+                    <p>Consulte e exporte o histórico de movimentações de pneus.</p>
+                </div>
+
+                <button type="button" id="btnVoltarRelatorios">
+                    Voltar
+                </button>
+            </div>
+
+            <div class="filtros-movimentacoes">
+                <div class="campo-filtro">
+                    <label for="relatorioDataInicial">Data inicial</label>
+                    <input type="date" id="relatorioDataInicial">
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="relatorioDataFinal">Data final</label>
+                    <input type="date" id="relatorioDataFinal">
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="relatorioTipoMovimentacao">Tipo de movimentação</label>
+                    <select id="relatorioTipoMovimentacao">
+                        <option value="">Todos os tipos</option>
+                        <option value="INSTALACAO">Instalação</option>
+                        <option value="RETIRADA">Retirada</option>
+                    </select>
+                </div>
+
+                <div class="acoes-filtros">
+                    <button type="button" id="btnConsultarRelatorio">
+                        Consultar relatório
+                    </button>
+                </div>
+            </div>
+
+            <div id="resumoRelatorioMovimentacoes">
+                <p>Informe os filtros e consulte o relatório.</p>
+            </div>
+
+            <div class="acoes-relatorio">
+                <button type="button" id="btnExportarPDF" disabled>
+                    Gerar PDF
+                </button>
+
+                <button type="button" id="btnExportarCSV" disabled>
+                    Exportar CSV para Excel
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tipo</th>
+                            <th>ID do pneu</th>
+                            <th>Número de fogo</th>
+                            <th>Equipamento</th>
+                            <th>Posição</th>
+                            <th>Motivo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="corpoTabelaRelatorioMovimentacoes">
+                        <tr>
+                            <td colspan="8">Consulte um relatório para exibir os dados.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="mensagemRelatorioMovimentacoes"></p>
+        </section>
+
+
+        <!-- TELA DE CADASTRO DE EQUIPAMENTOS -->
+        <section id="telaEquipamentos" class="module-section" hidden>
+            <div class="section-heading">
+                <div>
+                    <h3>Cadastro de Equipamentos</h3>
+                    <p>Cadastre veículos e máquinas para controlar suas posições de pneus.</p>
+                </div>
+            </div>
+
+            <form id="formCadastroEquipamento">
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="tipoEquipamento">Tipo de equipamento</label>
+                        <select id="tipoEquipamento" required>
+                            <option value="">Selecione</option>
+                            <option value="CAMINHAO">Caminhão</option>
+                            <option value="CAMINHAO_FORA_DE_ESTRADA">Caminhão fora de estrada</option>
+                            <option value="CARREGADEIRA">Carregadeira</option>
+                            <option value="ESCAVADEIRA">Escavadeira</option>
+                            <option value="MOTONIVELADORA">Motoniveladora</option>
+                            <option value="RETROESCAVADEIRA">Retroescavadeira</option>
+                            <option value="EMPILHADEIRA">Empilhadeira</option>
+                            <option value="TRATOR">Trator</option>
+                            <option value="OUTRO">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="layoutEquipamento">Layout de rodagem</label>
+                        <select id="layoutEquipamento" required>
+                            <option value="">Selecione o layout</option>
+                            <optgroup label="Caminhões rodoviários">
+                                <option value="CAMINHAO_4X2_6">Caminhão 4×2 — 6 posições</option>
+                                <option value="CAMINHAO_6X2_8">Caminhão 6×2 — 8 posições</option>
+                                <option value="CAMINHAO_6X4_10">Caminhão 6×4 — 10 posições</option>
+                                <option value="CAMINHAO_6X6_12">Caminhão 6×6 — 12 posições</option>
+                            </optgroup>
+                            <optgroup label="Máquinas fora de estrada">
+                                <option value="FORA_ESTRADA_6_6">Caminhão rígido fora de estrada — 6 posições</option>
+                                <option value="CARREGADEIRA_4">Carregadeira — 4 posições</option>
+                                <option value="CARREGADEIRA_6">Carregadeira — 6 posições</option>
+                                <option value="MOTONIVELADORA_6">Motoniveladora — 6 posições</option>
+                                <option value="RETROESCAVADEIRA_4">Retroescavadeira — 4 posições</option>
+                                <option value="ESCAVADEIRA_RODAS_4">Escavadeira de rodas — 4 posições</option>
+                            </optgroup>
+                            <optgroup label="Agrícola e movimentação">
+                                <option value="TRATOR_4">Trator agrícola — 4 posições</option>
+                                <option value="TRATOR_6">Trator agrícola com rodagem dupla — 6 posições</option>
+                                <option value="EMPILHADEIRA_4">Empilhadeira — 4 posições</option>
+                                <option value="EMPILHADEIRA_3">Empilhadeira compacta — 3 posições</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tagEquipamento">TAG / Código do equipamento</label>
+                        <input type="text" id="tagEquipamento"
+                            placeholder="Ex.: CAM-001" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="placaEquipamento">Placa</label>
+                        <input type="text" id="placaEquipamento"
+                            placeholder="Opcional para máquinas">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="marcaEquipamento">Marca</label>
+                        <input type="text" id="marcaEquipamento"
+                            placeholder="Ex.: Caterpillar" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modeloEquipamento">Modelo</label>
+                        <input type="text" id="modeloEquipamento"
+                            placeholder="Modelo do equipamento" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="setorEquipamento">Setor / área</label>
+                        <input type="text" id="setorEquipamento" placeholder="Ex.: Mina, Britagem, Oficina" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="responsavelEquipamento">Responsável / supervisor</label>
+                        <input type="text" id="responsavelEquipamento" placeholder="Nome do supervisor responsável" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="observacoesEquipamento">Observações</label>
+                        <input type="text" id="observacoesEquipamento"
+                            placeholder="Informações adicionais">
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="btnSalvarEquipamento">
+                        Salvar equipamento
+                    </button>
+                    <button type="button" id="btnAbrirListaEquipamentos">
+                        Consultar equipamentos cadastrados
+                    </button>
+                    <button type="button" id="btnVoltarPainelEquipamentos">
+                        Voltar ao painel
+                    </button>
+                </div>
+
+                <p id="mensagemEquipamento" role="status"></p>
+            </form>
+        </section>
+
+
+<section id="telaPosicoesEquipamento" class="module-section" hidden>
+    <div class="section-heading">
+        <div>
+            <h3>Posições de pneus do equipamento</h3>
+            <p>Consulte as posições disponíveis e os pneus instalados.</p>
+        </div>
+        <button type="button" id="btnGerarFichaPosicoes">
+            Gerar ficha PDF
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table id="tabelaPosicoesEquipamento">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Eixo</th>
+                    <th>Lado</th>
+                    <th>Posição física</th>
+                    <th>ID interno do pneu</th>
+                    <th>Número de fogo</th>
+                    <th>DOT</th>
+                    <th>Situação da posição</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="corpoTabelaPosicoesEquipamento">
+                <tr>
+                    <td colspan="9">
+                        Selecione um equipamento para consultar as posições.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    
+<div class="mapa-equipamento">
+    <div class="mapa-cabecalho">
+        <h4>Mapa de posições dos pneus</h4>
+        <p>Vista superior do equipamento</p>
+    </div>
+
+    <div class="mapa-legenda">
+        <span class="mapa-legenda-item"><i class="legenda-ponto livre"></i> Livres <strong id="contagemPosicoesLivres">0</strong></span>
+        <span class="mapa-legenda-item"><i class="legenda-ponto ocupado"></i> Ocupadas <strong id="contagemPosicoesOcupadas">0</strong></span>
+        <span class="mapa-legenda-item">Aplicados <strong id="contagemPneusAplicados">0</strong></span>
+        <span class="mapa-legenda-item mapa-legenda-estado">Novos <strong id="contagemPneusNovos">0</strong></span>
+        <span class="mapa-legenda-item mapa-legenda-estado">Recapados <strong id="contagemPneusRecapados">0</strong></span>
+        <span class="mapa-legenda-item mapa-legenda-estado">Meia vida <strong id="contagemPneusMeiaVida">0</strong></span>
+        <span class="mapa-legenda-instrucao">Selecione uma roda para ver detalhes e movimentações.</span>
+    </div>
+
+    <div id="mapaPosicoes" class="mapa-chassi" aria-label="Mapa dinâmico das posições dos pneus">
+        <p class="mapa-placeholder">O mapa será montado conforme o layout do equipamento selecionado.</p>
+    </div>
+
+    <p id="detalhesPosicaoMapa" class="detalhes-posicao-mapa">
+        Selecione uma posição no mapa.
+    </p>
+
+<div id="painelInstalacaoPneu" class="painel-instalacao-pneu" hidden>
+    <h4>Instalar pneu na posição selecionada</h4>
+
+    <p id="resumoInstalacaoPneu">
+        Selecione uma posição livre no mapa.
+    </p>
+
+    <form id="formInstalacaoPneu">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="idPneuInstalacao">Pneu cadastrado</label>
+                <select id="idPneuInstalacao" required>
+                    <option value="">Selecione um pneu</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dataInstalacaoPneu">Data da instalação</label>
+                <input
+                    type="date"
+                    id="dataInstalacaoPneu"
+                    required
+                >
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" id="btnConfirmarInstalacaoPneu" disabled>
+                Confirmar instalação
+            </button>
+
+            <button type="button" id="btnCancelarInstalacaoPneu">
+                Cancelar
+            </button>
+        </div>
+
+        <p id="mensagemInstalacaoPneu" role="status"></p>
+    </form>
+</div>
+
+
+<div id="painelRetiradaPneu" class="painel-instalacao-pneu" hidden>
+    <h4>Retirar pneu da posição</h4>
+
+    <p id="resumoRetiradaPneu">
+        Selecione uma posição ocupada no mapa.
+    </p>
+
+    <form id="formRetiradaPneu">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="dataRetiradaPneu">Data da retirada</label>
+                <input type="date" id="dataRetiradaPneu" required>
+            </div>
+
+            <div class="form-group">
+                <label for="motivoRetiradaPneu">Motivo da retirada</label>
+                <select id="motivoRetiradaPneu" required>
+                    <option value="">Selecione o motivo</option>
+                    <option value="MANUTENCAO">Manutenção</option>
+                    <option value="RODIZIO">Rodízio</option>
+                    <option value="TROCA">Troca de pneu</option>
+                    <option value="FIM_DE_VIDA_UTIL">Fim da vida útil</option>
+                    <option value="OUTROS">Outros</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="statusAposRetiradaPneu">Status após retirada</label>
+                <select id="statusAposRetiradaPneu" required>
+                    <option value="">Selecione o status do pneu</option>
+                    <option value="CONSERTO_OFICINA">Conserto oficina</option>
+                    <option value="DESCARTE">Descarte</option>
+                    <option value="PARA_RECAPE">Para recape</option>
+                    <option value="EM_RECAPE">Em recape</option>
+                    <option value="RESERVA_PRONTA_UTILIZACAO">Reserva pronta utilização</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" id="btnConfirmarRetiradaPneu">
+                Confirmar retirada
+            </button>
+
+            <button type="button" id="btnCancelarRetiradaPneu">
+                Cancelar
+            </button>
+        </div>
+
+        <p id="mensagemRetiradaPneu" role="status"></p>
+    </form>
+</div>
+
+
+</div>
+
+
+    <p id="mensagemPosicoesEquipamento" role="status"></p>
+
+    <div class="form-actions">
+        <button type="button" id="btnVoltarListaEquipamentos">
+            Voltar aos equipamentos
+        </button>
+    </div>
+</section>
+
+
+<!-- CONSULTA DE EQUIPAMENTOS -->
+<section id="telaListaEquipamentos" class="module-section" hidden>
+    <div class="section-heading">
+        <div>
+            <h3>Equipamentos cadastrados</h3>
+            <p>Consulte os veículos e máquinas registrados no MAINTIX.</p>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="button" id="btnAtualizarEquipamentos">
+            Atualizar lista
+        </button>
+
+        <button type="button" id="btnNovoEquipamento">
+            Cadastrar equipamento
+        </button>
+
+        <button type="button" id="btnVoltarPainelListaEquipamentos">
+            Voltar ao painel
+        </button>
+    </div>
+
+    <div class="tabela-container">
+        <table id="tabelaEquipamentos">
+            <thead>
+                <tr>
+                    <th>ID interno</th>
+                    <th>Tipo</th>
+                    <th>TAG</th>
+                    <th>Placa</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Setor</th>
+                    <th>Responsável</th>
+                    <th>Status</th>
+                    <th>Data de cadastro</th>                
+                    <th>Ações</th>
+
+                </tr>
+            </thead>
+
+            <tbody id="corpoTabelaEquipamentos">
+                <tr>
+                    <td colspan="11">Carregando equipamentos...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p id="mensagemListaEquipamentos" role="status"></p>
+</section>
+
+
+
+        <section id="telaRecapagens" class="module-section" hidden>
+            <div class="section-heading">
+                <div>
+                    <h3>Controle de recapagens</h3>
+                    <p>Registre serviços de recapagem vinculados ao ID interno definitivo do pneu.</p>
+                </div>
+                <span class="version">RECAPAGENS</span>
+            </div>
+
+            <form id="formRecapagem">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="recapagemIdPneu">Pneu / ID interno *</label>
+                        <select id="recapagemIdPneu" required>
+                            <option value="">Selecione um pneu</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recapagemEmpresa">Empresa de recapagem *</label>
+                        <input type="text" id="recapagemEmpresa" maxlength="120" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recapagemDataEnvio">Data de envio *</label>
+                        <input type="date" id="recapagemDataEnvio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recapagemDataRetorno">Data de retorno</label>
+                        <input type="date" id="recapagemDataRetorno">
+                    </div>
+                    <div class="form-group">
+                        <label for="recapagemCusto">Custo (R$) *</label>
+                        <input type="number" id="recapagemCusto" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recapagemKmEnvio">Quilometragem na saída</label>
+                        <input type="number" id="recapagemKmEnvio" min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="recapagemKmRetorno">Quilometragem no retorno</label>
+                        <input type="number" id="recapagemKmRetorno" min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="recapagemHorimetroEnvio">Horímetro na saída</label>
+                        <input type="number" id="recapagemHorimetroEnvio" min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="recapagemHorimetroRetorno">Horímetro no retorno</label>
+                        <input type="number" id="recapagemHorimetroRetorno" min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="recapagemStatus">Situação</label>
+                        <select id="recapagemStatus">
+                            <option value="EM RECAPAGEM">Em recapagem</option>
+                            <option value="CONCLUÍDA">Concluída</option>
+                        </select>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label for="recapagemObservacoes">Observações</label>
+                        <textarea id="recapagemObservacoes" rows="3" maxlength="1000" placeholder="Informações sobre banda, serviço executado, garantia ou condições do pneu"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="btnSalvarRecapagem">Registrar recapagem</button>
+                    <button type="button" id="btnLimparRecapagem">Limpar formulário</button>
+                    <button type="button" id="btnVoltarPainelRecapagens">Voltar ao painel</button>
+                </div>
+            </form>
+            <p id="mensagemRecapagem" role="status" aria-live="polite"></p>
+
+            <div class="section-heading" style="margin-top: 28px;">
+                <div>
+                    <h3>Histórico de recapagens</h3>
+                    <p>Todos os eventos registrados para cada pneu.</p>
+                </div>
+                <button type="button" id="btnAtualizarRecapagens">Atualizar histórico</button>
+            </div>
+            <div class="tabela-container">
+                <table id="tabelaRecapagens">
+                    <thead><tr>
+                        <th>Data envio</th><th>ID interno</th><th>Empresa</th><th>Data retorno</th><th>Custo</th><th>KM / Horímetro</th><th>Situação</th><th>Observações</th><th>Ações</th>
+                    </tr></thead>
+                    <tbody id="corpoTabelaRecapagens"><tr><td colspan="9">Carregando histórico...</td></tr></tbody>
+                </table>
+            </div>
+            <p id="mensagemListaRecapagens" role="status"></p>
+        </section>
+
+        <section id="telaArquivados" class="module-section" hidden>
+            <div class="section-heading">
+                <div>
+                    <h3>Registros arquivados</h3>
+                    <p>Consulte e restaure registros sem apagar dados ou históricos.</p>
+                </div>
+                <span class="version">ARQUIVO</span>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="filtroTipoArquivado">Tipo de registro</label>
+                    <select id="filtroTipoArquivado">
+                        <option value="">Todos os tipos</option>
+                        <option value="pneus">Pneus</option>
+                        <option value="equipamentos">Equipamentos</option>
+                        <option value="posicoes">Posições</option>
+                        <option value="movimentacoes">Movimentações</option>
+                        <option value="recapagens">Recapagens</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tabela-container">
+                <table id="tabelaArquivados">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>ID</th>
+                            <th>Identificação</th>
+                            <th>Data do arquivamento</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaArquivados">
+                        <tr><td colspan="5">Carregando registros arquivados...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="mensagemArquivados" role="status" aria-live="polite"></p>
+        </section>
+
+        <footer>
+            MAINTIX · Sistema de gestão de pneus
+        </footer>       
+    </main>
+</body>
+</html>
