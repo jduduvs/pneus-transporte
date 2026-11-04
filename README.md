@@ -1,9 +1,15 @@
 # MAINTIX
 
-Sistema de gestão de pneus para uma organização. Todos os usuários ativos
-compartilham os mesmos equipamentos e pneus. O modo atual continua usando
-IndexedDB enquanto a configuração do Supabase estiver vazia. A integração
-compartilhada usa Supabase Auth e PostgreSQL com Row Level Security (RLS).
+Sistema de gestão de pneus. Por padrão, abre sem login e guarda os dados no
+IndexedDB do navegador atual. Cada computador e navegador tem uma base
+separada; os dados não são compartilhados. A integração opcional com Supabase
+permite compartilhar os dados, mas requer autenticação e políticas de segurança
+RLS.
+
+O modo sem login é adequado somente para dados que podem ser acessados por
+qualquer pessoa que use o mesmo navegador neste computador. O endereço do site
+é público; não use esse modo para informações que precisem de controle de
+acesso.
 
 ## Preparar a base compartilhada
 
@@ -25,10 +31,11 @@ compartilhada usa Supabase Auth e PostgreSQL com Row Level Security (RLS).
    Usuários novos devem ser convidados por um administrador. Configure um
    provedor SMTP próprio para envio confiável de convites em produção.
 6. Copie a URL do projeto e a chave **publishable** (ou a chave pública `anon`)
-   para `js/supabase-config.js`:
+   para `js/supabase-config.js` e habilite o modo compartilhado:
 
    ```js
    window.MAINTIX_SUPABASE_CONFIG = Object.freeze({
+       enabled: true,
        url: "https://SEU-PROJETO.supabase.co",
        publishableKey: "SUA_CHAVE_PUBLICA"
    });
@@ -74,20 +81,22 @@ site a cada envio para a branch `main`. Para ativá-lo:
    como o endereço acima e adicione esse endereço e
    `https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO/**` em `Redirect URLs`.
    Convites e outros links de autenticação usarão essas URLs.
-5. Abra o endereço publicado nos dois computadores e entre com contas ativas
-   do Supabase. Os usuários locais do IndexedDB não são contas compartilhadas:
-   um administrador deve convidar cada pessoa pelo MAINTIX.
+5. Na configuração padrão, o site abre sem login, mas cada navegador armazena
+   seus próprios dados localmente. Para compartilhar uma base entre
+   computadores, configure o Supabase conforme as instruções acima; nesse modo,
+   cada pessoa precisa entrar com uma conta ativa.
 
-O endereço do GitHub Pages e a tela de login ficam acessíveis pela internet;
-somente contas ativas autenticadas podem consultar ou alterar os dados, que
-continuam protegidos pelo Supabase e suas políticas RLS. O código do site e a
-chave publicável do Supabase são enviados ao navegador; nunca inclua uma chave
-`service_role` ou outra chave secreta no repositório ou no frontend.
+O endereço do GitHub Pages é público. No modo local sem login, os dados não são
+enviados ao Supabase nem sincronizados, mas qualquer pessoa que use o mesmo
+navegador neste computador pode consultar e alterar os registros locais. No
+modo Supabase, os dados compartilhados são protegidos por autenticação e RLS.
+Nunca inclua uma chave `service_role` ou outra chave secreta no repositório ou
+no frontend.
 
 ## Migração do navegador
 
-Depois de conectar a aplicação ao Supabase e entrar com o usuário
-administrador, use a opção de importação para enviar equipamentos, pneus,
+Depois de habilitar o Supabase e entrar com o usuário administrador, use a
+opção de importação para enviar equipamentos, pneus,
 posições, movimentações e recapagens do IndexedDB deste navegador. A importação
 usa os IDs existentes como chave, preserva registros que já estejam na base e
 pode ser repetida sem duplicar os mesmos registros. A importação não é uma
@@ -105,8 +114,8 @@ sem apagar seus dados ou vínculos. Os registros arquivados deixam de aparecer
 nas telas operacionais e ficam disponíveis em **Arquivados** para restauração.
 No Supabase, somente administradores podem arquivar ou restaurar; o banco
 também impede arquivar pneus aplicados, posições ocupadas ou equipamentos com
-pneus instalados. No modo local, as contas não têm perfis ou níveis de acesso,
-portanto qualquer usuário autenticado nesse navegador pode usar o arquivo.
+pneus instalados. No modo local sem login, qualquer pessoa que use o mesmo
+navegador pode arquivar ou restaurar registros.
 
 Para habilitar esse recurso em uma base Supabase existente, execute novamente
 `supabase/schema.sql` no SQL Editor. As colunas de arquivamento são adicionadas
