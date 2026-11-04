@@ -34,6 +34,22 @@
     let tentativasFalhas = 0;
     let bloqueadoAte = 0;
     const apiSupabase = window.maintixApi;
+    const config = window.MAINTIX_SUPABASE_CONFIG || {};
+
+    if (config.accessMode === "local-open") {
+        telaAuth.hidden = true;
+        telaAuth.removeAttribute("aria-modal");
+        definirTelasAplicacaoInertes(false);
+        document.body.classList.add("autenticado");
+        nomeUsuarioSessao.hidden = true;
+        botaoAdicionarUsuario.hidden = true;
+        botaoEncerrarSessao.hidden = true;
+        document.getElementById("btnImportarDadosLocais").hidden = true;
+        document.getElementById("btnMenuArquivados").hidden = false;
+        document.getElementById("avisoAutenticacao").textContent =
+            "Acesso sem login. Os dados ficam somente neste navegador e não são compartilhados entre computadores.";
+        return;
+    }
 
     if (apiSupabase?.isConfigured) {
         configurarAutenticacaoSupabase();

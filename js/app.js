@@ -14,7 +14,7 @@ function atualizarStatusConexao() {
     const conectado = navigator.onLine && (!remoto || Boolean(window.maintixApi.client));
 
     indicador.textContent = conectado
-        ? remoto ? "Supabase configurado" : "Armazenamento local"
+        ? remoto ? "Supabase configurado" : "Dados locais neste navegador"
         : "Sem conexão com a base";
 
     ponto.style.backgroundColor = conectado

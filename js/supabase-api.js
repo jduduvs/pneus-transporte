@@ -2,8 +2,10 @@
 
 (function configurarApiSupabase() {
     const config = window.MAINTIX_SUPABASE_CONFIG || {};
-    const temConfiguracao = Boolean(config.url || config.publishableKey);
-    const configuracaoCompleta = Boolean(config.url && config.publishableKey);
+    const temConfiguracao = config.enabled !== false &&
+        Boolean(config.url || config.publishableKey);
+    const configuracaoCompleta = temConfiguracao &&
+        Boolean(config.url && config.publishableKey);
     const cliente = configuracaoCompleta && window.supabase?.createClient
         ? window.supabase.createClient(config.url, config.publishableKey)
         : null;
